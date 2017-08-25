@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "ByteBuffer": "^0.2.6",
+    "blake2": "^1.4.0",
+    "bytebuffer": "^5.0.1",
+    "tweetnacl": "^1.0.0",
+    "uws": "^8.14.1"
+  }
+}
