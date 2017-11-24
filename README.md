@@ -5,6 +5,8 @@ NodeJS client to connect to Clash Royale servers.
 * Connect and login into Clash Royale servers
 * Encrypt packets to send them to the servers
 * Decrypt server packets
+* Auto update sha after maintenance
+* Calculate account checksum
 
 This is a basic client. Now is your turn. Modify the client and add functions to fit it to your requirements.
 
@@ -13,4 +15,6 @@ This is a basic client. Now is your turn. Modify the client and add functions to
 * Install [node-gyp](https://github.com/nodejs/node-gyp)
 
 ### Install
-Run `npm install`
+- Run `npm install`
+- Rename config.example to config.js and modify your credentials
+

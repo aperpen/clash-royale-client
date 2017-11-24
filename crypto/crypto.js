@@ -1,7 +1,7 @@
 const nacl = require('tweetnacl')
 const Nonce = require('./nonce')
 
-function Crypto() {}
+function Crypto() { }
 
 Crypto.prototype.processPacket = (message) => {
     switch (message.code) {
@@ -37,7 +37,9 @@ Crypto.prototype.processPacket = (message) => {
 }
 
 Crypto.prototype.encrypt = (code, payload) => {
-    if (code === 10101) {
+    if (code === 10100) {
+        return payload
+    } else if (code === 10101) {
         this.snonce = new Nonce()
         this.nonce = new Nonce({
             publicKey: this.keys.publicKey,

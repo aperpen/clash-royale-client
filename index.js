@@ -4,26 +4,35 @@ const Processor = require('./packets/processor')
 const Packetizer = require('./utils/packetizer')
 const Crypto = require('./crypto/crypto')
 
-var processor = new Processor()
 var packetizer = new Packetizer()
+var server = new net.Socket()
 
+processor = new Processor(server)
 config = require('./config')
 crypto = new Crypto()
-ByteBuffer = require('./utils/bytebuffer-sc')
-server = new net.Socket()
 packets = {}
+
 
 fs.readdir('./packets/client', (err, files) => {
     files.forEach(file => {
-        packets[file] = require(`./packets/client/${file}/main`)
+        let packet = require(`./packets/client/${file}`)
+        packets[packet.code] = Object.assign({ name: file }, packet)
+        packets[file] = packet
     })
 
-    console.log('Loaded ' + Object.keys(packets).length + ' definitions')
+    fs.readdir('./packets/server', (err, files) => {
+        files.forEach(file => {
+            let packet = require(`./packets/server/${file}`)
+            packets[packet.code] = Object.assign({ name: file }, packet)
+            packets[file] = packet
+        })
+        
+        console.log('Loaded ' + Object.keys(packets).length + ' packets')
+    })
 })
 
 server.connect(9339, 'game.clashroyaleapp.com', () => {
     processor.send(packets.Handshake.code, packets.Handshake.payload())
-    console.log('[SENT]', packets.Handshake.code, Buffer.from(packets.Handshake.payload()).toString('hex').slice(0,100)+'...')
 })
 
 server.on('data', chunk => {
@@ -35,19 +44,6 @@ server.on('data', chunk => {
         }
 
         let decrypted = crypto.processPacket(message)
-        console.log('[RECEIVED]', message.code, Buffer.from(decrypted).toString('hex').slice(0,100)+'...')
-        switch (message.code) {
-            case 20100:
-                let crypted = crypto.encrypt(packets.Login.code, packets.Login.payload())
-                processor.send(packets.Login.code, crypted)
-                console.log('[SENT]', packets.Login.code, Buffer.from(crypted).toString('hex').slice(0,100)+'...')
-                break;
-            case 20104:
-                console.log('Logged in successfully!!')
-                let cryptedKa = crypto.encrypt(packets.AskForTournaments.code, packets.AskForTournaments.payload())
-                processor.send(packets.AskForTournaments.code, cryptedKa)
-            default:
-                break;
-        }
+        processor.parse(message.code, decrypted)
     })
 })
