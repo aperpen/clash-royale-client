@@ -1,9 +1,9 @@
 module.exports.code = 20104
 
 module.exports.callback = () => {
+    require('../../../commands') // LAUNCH CMD SERVICE
     setInterval(() => {
-        let crypted = crypto.encrypt(packets.KeepAlive.code, packets.KeepAlive.payload())
-        processor.send(packets.KeepAlive.code, crypted)
+        processor.send(packets.KeepAlive.code, packets.KeepAlive.payload())
     }, 10000)
     config.ticks = 1
     setInterval(() => {

@@ -26,10 +26,12 @@ fs.readdir('./packets/client', (err, files) => {
             packets[packet.code] = Object.assign({ name: file }, packet)
             packets[file] = packet
         })
-        
-        console.log('Loaded ' + Object.keys(packets).length + ' packets')
+
+        console.log('Loaded ' + (Object.keys(packets).length / 2) + ' packets')
     })
 })
+
+
 
 server.connect(9339, 'game.clashroyaleapp.com', () => {
     processor.send(packets.Handshake.code, packets.Handshake.payload())
