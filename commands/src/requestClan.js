@@ -1,6 +1,6 @@
 module.exports.run = args => {
     let tag = args.shift()
-    tag = tag[0].startsWith('#') ? tag[0].substr(1) : tag[0]
+    tag = tag.startsWith('#') ? tag.substr(1) : tag
     let msg = args.join(' ')
 
     processor.send(packets.RequestJoin.code, packets.RequestJoin.payload(tag, msg))
