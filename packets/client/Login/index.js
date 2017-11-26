@@ -4,9 +4,9 @@ module.exports.code = 10101
 module.exports.payload = () => {
     let buf = ByteBuffer.allocate(254)
     
-    buf.writeInt32(config.credentials.id.high)
-    buf.writeInt32(config.credentials.id.low)
-    buf.writeIString(config.credentials.pass)
+    buf.writeInt32(config.account.id.high)
+    buf.writeInt32(config.account.id.low)
+    buf.writeIString(config.account.pass)
     buf.writeRrsInt32(3)
     buf.writeByte(0)
     buf.writeRrsInt32(690)

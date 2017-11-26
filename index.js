@@ -1,8 +1,10 @@
 const net = require('net')
 const fs = require('fs')
+const prompt = require('prompt-promise')
 const Processor = require('./packets/processor')
 const Packetizer = require('./utils/packetizer')
 const Crypto = require('./crypto/crypto')
+const tag2id = require('./utils/tag2id')
 
 var packetizer = new Packetizer()
 var server = new net.Socket()
@@ -16,36 +18,61 @@ packets = {}
 fs.readdir('./packets/client', (err, files) => {
     files.forEach(file => {
         let packet = require(`./packets/client/${file}`)
-        packets[packet.code] = Object.assign({ name: file }, packet)
+        packets[packet.code] = Object.assign({
+            name: file
+        }, packet)
         packets[file] = packet
     })
 
     fs.readdir('./packets/server', (err, files) => {
         files.forEach(file => {
             let packet = require(`./packets/server/${file}`)
-            packets[packet.code] = Object.assign({ name: file }, packet)
+            packets[packet.code] = Object.assign({
+                name: file
+            }, packet)
             packets[file] = packet
         })
-
-        console.log('Loaded ' + (Object.keys(packets).length / 2) + ' packets')
     })
 })
 
+selectAccount().then(acc => {
+    acc.id = tag2id.tag2id(acc.tag)
+    config.account = acc
 
+    server.connect(9339, 'game.clashroyaleapp.com', () => {
+        processor.send(packets.Handshake.code, packets.Handshake.payload())
+    })
 
-server.connect(9339, 'game.clashroyaleapp.com', () => {
-    processor.send(packets.Handshake.code, packets.Handshake.payload())
+    server.on('data', chunk => {
+        packetizer.packetize(chunk, (packet) => {
+            let message = {
+                code: packet.readUInt16BE(0),
+                length: packet.readUIntBE(2, 3),
+                payload: packet.slice(7, packet.length)
+            }
+
+            let decrypted = crypto.processPacket(message)
+            processor.parse(message.code, decrypted)
+        })
+    })
 })
 
-server.on('data', chunk => {
-    packetizer.packetize(chunk, (packet) => {
-        let message = {
-            code: packet.readUInt16BE(0),
-            length: packet.readUIntBE(2, 3),
-            payload: packet.slice(7, packet.length)
+async function selectAccount() {
+    if (!Array.isArray(config.credentials))
+        return config.credentials
+    else if (config.credentials.length === 1)
+        return config.credentials[0]
+    else {
+        console.log('Accounts:')
+        for (let i in config.credentials) {
+            let account = config.credentials[i]
+            console.log(`[${i}] ${account.name ? account.name : account.tag}`)
         }
 
-        let decrypted = crypto.processPacket(message)
-        processor.parse(message.code, decrypted)
-    })
-})
+        let selected = await prompt('Select an account: ')
+        if (config.credentials[selected] === undefined) {
+            console.log('Invalid account')
+            process.exit()
+        } else return config.credentials[selected]
+    }
+}

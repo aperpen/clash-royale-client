@@ -22,8 +22,8 @@ commands.kick = (buf, params) => {
     buf.writeRrsInt32(tick - 2)
     buf.writeRrsInt32(tick - 2)
 
-    buf.writeRrsInt32(config.credentials.id.high)
-    buf.writeRrsInt32(config.credentials.id.low)
+    buf.writeRrsInt32(config.account.id.high)
+    buf.writeRrsInt32(config.account.id.low)
     buf.writeIString(params.msg)
 
     let id = tag2id.tag2id(params.tag)
@@ -47,8 +47,8 @@ commands.joinClan = (buf, params) => {
     buf.writeRrsInt32(tick - 2)
     buf.writeRrsInt32(tick - 2)
 
-    buf.writeRrsInt32(config.credentials.id.high)
-    buf.writeRrsInt32(config.credentials.id.low)
+    buf.writeRrsInt32(config.account.id.high)
+    buf.writeRrsInt32(config.account.id.low)
 
     buf.writeIString('')
     console.log(buf.buffer.slice(0, buf.offset).toString('hex'))
