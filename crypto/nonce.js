@@ -1,14 +1,14 @@
 const nacl = require('tweetnacl')
-const blake2 = require('blake2')
+const blake2b = require('./blake2b')
 
 function Nonce(arg) {
     if (arg !== undefined && arg.publicKey) {
-        let b2 = blake2.createHash('blake2b', {
-            digestLength: 24
-        })
+        let b2 = new blake2b(24)
+
         if (arg.bytes) {
-            b2.update(arg.bytes);
+            b2.update(arg.bytes)
         }
+
         b2.update(arg.publicKey)
         b2.update(arg.serverKey)
 
