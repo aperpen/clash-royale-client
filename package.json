@@ -6,7 +6,6 @@
     "cmd": "cd commands && node client"
   },
   "dependencies": {
-    "blake2": "^1.4.0",
     "bytebuffer": "^5.0.1",
     "prettyjson": "^1.2.1",
     "prompt-promise": "^1.0.3",
