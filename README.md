@@ -30,10 +30,11 @@ Note that you must start client before run the commands service
 
 
 ## Installation
-### Prerequisites
-* Install [node-gyp](https://github.com/nodejs/node-gyp)
-
-### Install
 - Run `npm install`
 - Rename config.example to config.js and modify your credentials
+
+## Credits
+- [dcsposh](https://github.com/dcposch) for blake2b logic ([blakejs](https://github.com/dcposch/blakejs))
+- [clugh](https://github.com/clugh) for [documentation of the Clash Royale protocol](https://github.com/clugh/cocdp/wiki/Protocol)
+- Contributors of [node-cr-proxy](https://github.com/royale-proxy/node-cr-proxy/) for packetreceiver and bytebuffer-sc libs
 
