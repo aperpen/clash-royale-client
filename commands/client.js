@@ -2,7 +2,7 @@ const net = require('net')
 
 var client = new net.Socket()
 
-client.connect(1339, '0.0.0.0', () => {
+client.connect(1339, '127.0.0.1', () => {
     console.log('✔️ Connected to the server')
     process.stdout.write('> ')
 })
