@@ -50,7 +50,6 @@ selectAccount().then(acc => {
                 length: packet.readUIntBE(2, 3),
                 payload: packet.slice(7, packet.length)
             }
-
             let decrypted = crypto.processPacket(message)
             processor.parse(message.code, decrypted)
         })

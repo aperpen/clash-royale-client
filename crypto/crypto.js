@@ -15,7 +15,7 @@ Crypto.prototype.processPacket = (message) => {
             break;
         case 20103:
             return message.payload
-        case 20104:
+        case 22280:
             let nonce = this.nonce = new Nonce({
                 publicKey: this.keys.publicKey,
                 serverKey: this.serverKey,
@@ -47,7 +47,7 @@ Crypto.prototype.encrypt = (code, payload) => {
         })
         this.sharedKey = nacl.box.before(this.serverKey, this.keys.secretKey)
         let crypted = nacl.box.after(Buffer.concat([this.sessionKey, this.snonce.payload, payload]), this.nonce.payload, this.sharedKey)
-
+        
         return Buffer.concat([this.keys.publicKey, Buffer.from(crypted)])
     }
 

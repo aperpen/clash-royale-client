@@ -2,7 +2,7 @@ const tag2id = require('../../../utils/tag2id')
 const ByteBuffer = require('../../../utils/bytebuffer-sc')
 
 module.exports = {
-  code: 24113,
+  code: 25880,
   decode: (payload) => {
     let buf = ByteBuffer.fromBinary(payload)
 
@@ -19,6 +19,7 @@ module.exports = {
       card.level = buf.readRrsInt32()
       buf.readRrsInt32()
       card.count = buf.readRrsInt32()
+      buf.readRrsInt32()
       buf.readRrsInt32()
       buf.readRrsInt32()
       buf.readRrsInt32()
@@ -51,6 +52,7 @@ module.exports = {
       buf.readRrsInt32()
       buf.readRrsInt32()
     }
+
     json.name = buf.readIString()
     buf.readByte() // NAME CHANGES
 

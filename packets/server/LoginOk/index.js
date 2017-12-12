@@ -1,4 +1,4 @@
-module.exports.code = 20104
+module.exports.code = 22280
 
 module.exports.callback = () => {
     require('../../../commands') // LAUNCH CMD SERVICE
@@ -9,4 +9,5 @@ module.exports.callback = () => {
     setInterval(() => {
         config.ticks += 2
     }, 100)
+
 }

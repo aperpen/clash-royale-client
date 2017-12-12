@@ -5,10 +5,10 @@ module.exports.payload = () => {
     let buf = ByteBuffer.allocate(72)
 
     buf.writeInt32(1)
-    buf.writeInt32(14)
+    buf.writeInt32(15)
     buf.writeInt32(3)
-    buf.writeInt32(1)
-    buf.writeInt32(690)
+    buf.writeInt32(0)
+    buf.writeInt32(830)
     buf.writeIString(config.resourceSha)
     buf.writeInt32(2)
     buf.writeInt32(2)
