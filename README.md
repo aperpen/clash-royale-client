@@ -37,6 +37,7 @@ Note that you must start client before run the commands service
 - Rename config.example to config.js and modify your credentials
 
 ## Credits
+- [iGio90](https://github.com/iGio90) for the new key and **all the amazing contributions he does**
 - [dcsposh](https://github.com/dcposch) for blake2b logic ([blakejs](https://github.com/dcposch/blakejs))
 - [clugh](https://github.com/clugh) for [documentation of the Clash Royale protocol](https://github.com/clugh/cocdp/wiki/Protocol)
 - Contributors of [node-cr-proxy](https://github.com/royale-proxy/node-cr-proxy/) for packetreceiver and bytebuffer-sc libs
