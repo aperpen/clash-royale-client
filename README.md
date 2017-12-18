@@ -4,7 +4,7 @@ NodeJS client to connect to Clash Royale servers.
 ![](https://raw.githubusercontent.com/aperpen/clash-royale-client/master/screenshot.png)
 
 ## NOTE
-Some commands like invite, help, leaveClan... don't work because the Clash Royale update
+Some commands like invite or leaveClan don't work because the Clash Royale update until we find the new IDs
 
 ## What can it do?
 * Connect and login into Clash Royale servers
