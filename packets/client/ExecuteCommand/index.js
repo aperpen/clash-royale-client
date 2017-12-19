@@ -16,7 +16,7 @@ module.exports.payload = args => {
 const commands = {}
 
 commands.kick = (buf, params) => {
-    buf.writeRrsInt32(514) // COMMAND ID
+    buf.writeRrsInt32(537) // COMMAND ID
 
     let tick = config.ticks
     buf.writeRrsInt32(tick - 2)
