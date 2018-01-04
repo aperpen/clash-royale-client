@@ -1,3 +1,4 @@
+
 const nacl = require('tweetnacl')
 const Nonce = require('./nonce')
 
@@ -55,4 +56,4 @@ Crypto.prototype.encrypt = (code, payload) => {
     return nacl.box.after(payload, this.snonce.payload, this.sharedKey)
 }
 
-module.exports = Crypto
+module.exports = new Crypto

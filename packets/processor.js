@@ -1,4 +1,5 @@
 const prettyjson = require('prettyjson')
+const crypto = require('../crypto/crypto')
 
 function Processor(server) {
     this.server = server
@@ -17,6 +18,7 @@ Processor.prototype.send = function (code, payload) {
 
 Processor.prototype.parse = (code, buffer) => {
     console.log('📥 ' + (packets[code] && packets[code].name ? packets[code].name : code))
+    console.log(Buffer.from(buffer).toString('hex'))
     if (packets[code]) {
         if (typeof packets[code].decode == 'function') {
             try {

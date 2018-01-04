@@ -1,6 +1,6 @@
 const ByteBuffer = require('../../../utils/bytebuffer-sc')
 const tag2id = require('../../../utils/tag2id')
-// NOT WORKING YET
+
 module.exports.code = 18688
 module.exports.payload = args => {
     let buf = ByteBuffer.allocate(500)

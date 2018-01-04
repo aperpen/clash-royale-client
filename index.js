@@ -1,9 +1,9 @@
 const net = require('net')
 const fs = require('fs')
 const prompt = require('prompt-promise')
-const Processor = require('./packets/processor')
 const Packetizer = require('./utils/packetizer')
-const Crypto = require('./crypto/crypto')
+const Processor = require('./packets/processor')
+const crypto = require('./crypto/crypto')
 const tag2id = require('./utils/tag2id')
 
 var packetizer = new Packetizer()
@@ -11,7 +11,6 @@ var server = new net.Socket()
 
 processor = new Processor(server)
 config = require('./config')
-crypto = new Crypto()
 packets = {}
 
 
