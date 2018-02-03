@@ -51,5 +51,4 @@ commands.joinClan = (buf, params) => {
     buf.writeRrsInt32(config.account.id.low)
 
     buf.writeIString('')
-    console.log(buf.buffer.slice(0, buf.offset).toString('hex'))
 }

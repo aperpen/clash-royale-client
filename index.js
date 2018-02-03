@@ -5,6 +5,7 @@ const Packetizer = require('./utils/packetizer')
 const Processor = require('./packets/processor')
 const crypto = require('./crypto/crypto')
 const tag2id = require('./utils/tag2id')
+const screen = require('./utils/console')
 
 var packetizer = new Packetizer()
 var server = new net.Socket()
@@ -34,7 +35,9 @@ fs.readdir('./packets/client', (err, files) => {
     })
 })
 
+screen.banner()
 selectAccount().then(acc => {
+    screen.init()
     acc.id = tag2id.tag2id(acc.tag)
     config.account = acc
 

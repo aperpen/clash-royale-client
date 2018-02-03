@@ -2,10 +2,10 @@
   "name": "clash-royale-client",
   "version": "1.0.0",
   "scripts": {
-    "client": "node index",
-    "cmd": "cd commands && node client"
+    "client": "node index"
   },
   "dependencies": {
+    "blessed": "^0.1.81",
     "bytebuffer": "^5.0.1",
     "prettyjson": "^1.2.1",
     "prompt-promise": "^1.0.3",

@@ -1,5 +1,7 @@
 const ByteBuffer = require('../../../utils/bytebuffer-sc')
 const fs = require('fs')
+const log = require('../../../utils/console').log
+
 module.exports.code = 20103
 
 module.exports.decode = (payload) => {
@@ -25,6 +27,6 @@ module.exports.callback = async data => {
   if (data.code === 7) {
     config.resourceSha = data.sha
     await fs.writeFileSync('./config.js', 'module.exports = ' + JSON.stringify(config, null, 3))
-    console.log('Resource SHA updated after maintenance. Restart the client to log in.')
+    log('Resource SHA updated after maintenance. Restart the client to log in.')
   }
 }

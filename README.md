@@ -21,13 +21,8 @@ This is a basic client. Now is your turn. Modify the client and add functions to
 ### Running the client  
 ```npm run client```
 
-Client has a built-in server that allows to controll it through commands:
-### Running commands service
-- Run cmd client: ```npm run cmd```
+### Commands
 - Type 'help' to get started
-
-Note that you must start client before run the commands service
-
 
 ## Installation
 - Run `npm install`

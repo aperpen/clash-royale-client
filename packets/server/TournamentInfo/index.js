@@ -71,7 +71,6 @@ module.exports.decode = payload => {
     json.started = payload.readByte()
     json.unk3 = payload.readByte()
     json.unk4 = payload.readRrsInt32()
-    //json.unk5 = payload.readByte()
 
     return json
 }

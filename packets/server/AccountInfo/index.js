@@ -1,4 +1,5 @@
 const ByteBuffer = require('../../../utils/bytebuffer-sc')
+const log = require('../../../utils/console').log
 
 module.exports.code = 28502
 
@@ -22,5 +23,5 @@ module.exports.decode = payload => {
 module.exports.callback = data => {
   if(data.unlockedCards)
     config.checksum = ((data.unlockedCards - 8) << 16) | data.checksumSeed
-  else console.log('[WARN] Failed to calculate checksum, some commands won\'t work')
+  else log('[WARN] Failed to calculate checksum, some commands won\'t work')
 }
