@@ -1,11 +1,11 @@
 const ByteBuffer = require('../../../utils/bytebuffer-sc')
-const battle = require('./battle')
-const battleFinished = require('./battleFinished')
-const chat = require('./chat')
-const donation = require('./donation')
-const event = require('./event')
-const joinRequest = require('./joinRequest')
-const replay = require('./replay')
+const battle = require('../../component/ClanChat/battle')
+const battleFinished = require('../../component/ClanChat/battleFinished')
+const chat = require('../../component/ClanChat/chat')
+const donation = require('../../component/ClanChat/donation')
+const event = require('../../component/ClanChat/event')
+const joinRequest = require('../../component/ClanChat/joinRequest')
+const replay = require('../../component/ClanChat/replay')
 
 const ids = {
     DONATION: 1,

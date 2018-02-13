@@ -6,11 +6,13 @@ module.exports.decode = buffer => {
     json.message = buffer.readIString()
     json.battleJson = buffer.readIString()
     buffer.readRrsInt32()
-    buffer.readRrsInt32()
+    buffer.readRrsInt32() // ARENA SCID
     json.arena = buffer.readRrsInt32()
     json.views = buffer.readRrsInt32()
     buffer.readByte()
-    buffer.readRrsInt32()
+    let unk = buffer.readRrsInt32()
+    if(unk) buffer.readRrsInt32()
+    
 
     return json
 }
