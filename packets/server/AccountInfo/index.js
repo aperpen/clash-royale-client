@@ -12,7 +12,7 @@ module.exports.decode = payload => {
 
   /* A BIT TRICKY BUT WORKS */
   try {
-    let unlockedCardsHex = /0508((?:[0-9a-f]{4}|[0-9a-f]{2}))0509/.exec(buffer.toHex(0))[1]
+    let unlockedCardsHex = /0508((?:[0-9a-f]{4}|[0-9a-f]{2}))05/.exec(buffer.toHex(0))[1]
     json.unlockedCards = ByteBuffer.fromHex(unlockedCardsHex).readRrsInt32()
   } catch (e) {
     json.unlockedCards = false
