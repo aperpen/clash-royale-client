@@ -13,5 +13,8 @@ module.exports.commands = {}
 
 module.exports.run = input => {
     let command = input.toString().split(' ').map(t => t.trim())
-    if (module.exports.commands[command[0]]) module.exports.commands[command.shift()].run(command)
+    if (module.exports.commands[command[0]]) {
+        if(module.exports.commands[command[0]].disabled) screen.log('Command disabled')
+        else module.exports.commands[command.shift()].run(command)
+    }
 }

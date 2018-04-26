@@ -1,4 +1,4 @@
-module.exports.code = 22280
+module.exports.code = 22194
 
 module.exports.callback = () => {
     require('../../../commands') // LAUNCH CMD SERVICE

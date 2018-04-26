@@ -8,3 +8,5 @@ module.exports.help = {
     'example': 'chat Hi clan!',
     'description': 'Send a chat message to your clan'
 }
+
+module.exports.disabled = true

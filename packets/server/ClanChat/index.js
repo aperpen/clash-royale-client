@@ -50,7 +50,9 @@ module.exports.decode = payload => {
         entry.senderRole = buffer.readRrsInt32()
         entry.age = buffer.readRrsInt32()
         buffer.readByte()
-       
+        buffer.readByte()
+        buffer.readByte()
+
         switch (entry.id) {
             case ids.BATTLE:
                 entry.data = battle.decode(buffer)
@@ -79,3 +81,5 @@ module.exports.decode = payload => {
     
     return json
 }
+
+module.exports.disabled = true

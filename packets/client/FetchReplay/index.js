@@ -16,3 +16,5 @@ module.exports.payload = (id, server) => {
     buf.writeRrsInt32(0)
     return buf.buffer
 }
+
+module.exports.disabled = true

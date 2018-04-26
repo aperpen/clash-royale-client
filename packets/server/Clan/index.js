@@ -3,7 +3,7 @@ const ByteBuffer = require('../../../utils/bytebuffer-sc')
 
 
 module.exports = {
-  code: 26550,
+  code: 20582,
   decode: (payload) => {
     payload = ByteBuffer.fromBinary(payload)
 
@@ -29,12 +29,12 @@ module.exports = {
     payload.readRrsInt32()
     payload.readByte()
     payload.readByte()
-    payload.readByte()
 
+    payload.readRrsInt32()
     json.region = payload.readRrsInt32()
-
-    payload.readByte()
-
+    payload.readRrsInt32()
+    payload.readRrsInt32()
+    
     json.description = payload.readIString()
     json.members = []
 
@@ -56,9 +56,8 @@ module.exports = {
       payload.readByte()
       payload.readByte()
 
-      member.clanChestCrowns = payload.readRrsInt32()
-
-      member.clanChest = payload.readRrsInt32() ? false : true
+      payload.readRrsInt32()
+      payload.readRrsInt32()
       payload.readRrsInt32()
       payload.readRrsInt32()
       payload.readByte()
@@ -72,7 +71,7 @@ module.exports = {
     payload.readByte()
     payload.readByte()
     payload.readByte()
-    json.clanChestCrowns = payload.readRrsInt32()
+    payload.readRrsInt32()
 
     return json
   }

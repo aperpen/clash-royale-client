@@ -8,3 +8,5 @@ module.exports.help = {
     'example': 'tourney #2PP',
     'description': 'Fetch stats from given tournament'
 }
+
+module.exports.disabled = true

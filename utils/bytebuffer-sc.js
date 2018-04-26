@@ -12,7 +12,7 @@ var ByteBuffer = module.exports = require('bytebuffer');
  *  to fully decode the varint.
  * @expose
  */
-ByteBuffer.prototype.readRrsInt32 = function(offset) {
+ByteBuffer.prototype.readRrsInt32 = function (offset) {
     var relative = typeof offset === 'undefined';
     if (relative) offset = this.offset;
     if (!this.noAssert) {
@@ -68,51 +68,54 @@ ByteBuffer.prototype.readRrsInt32 = function(offset) {
  * @returns {!ByteBuffer|number} this if `offset` is omitted, else the actual number of bytes written
  * @expose
  */
-ByteBuffer.prototype.writeRrsInt32 = function(value, offset) {
-    var relative = typeof offset === 'undefined';
-    if (relative) offset = this.offset;
-    if (!this.noAssert) {
-        if (typeof value !== 'number' || value % 1 !== 0)
-            throw TypeError("Illegal value: " + value + " (not an integer)");
-        value |= 0;
-        if (typeof offset !== 'number' || offset % 1 !== 0)
-            throw TypeError("Illegal offset: " + offset + " (not an integer)");
-        offset >>>= 0;
-        if (offset < 0 || offset + 0 > this.buffer.length)
-            throw RangeError("Illegal offset: 0 <= " + offset + " (+" + 0 + ") <= " + this.buffer.length);
-    }
-    var size = ByteBuffer.calculateVarint32(value),
-        rotate = true,
-        b;
-    offset += size;
-    var capacity10 = this.buffer.length;
-    if (offset > capacity10)
-        this.resize((capacity10 *= 2) > offset ? capacity10 : offset);
-    offset -= size;
-
-    value = (value << 1) ^ (value >> 31);
-
-    value >>>= 0;
-    while (value) {
-        b = (value & 0x7f);
-        if (value >= 0x80)
-            b |= 0x80;
-        if (rotate) {
-            rotate = false;
-            var lsb = b & 0x1;
-            var msb = (b & 0x80) >> 7;
-            b = b >> 1; // rotate to the right
-            b = b & ~(0xC0); // clear 7th and 6th bit
-            b = b | (msb << 7) | (lsb << 6); // insert msb and lsb back in
+ByteBuffer.prototype.writeRrsInt32 = function (value, offset) {
+    if (value === 0) this.writeByte(0)
+    else {
+        var relative = typeof offset === 'undefined';
+        if (relative) offset = this.offset;
+        if (!this.noAssert) {
+            if (typeof value !== 'number' || value % 1 !== 0)
+                throw TypeError("Illegal value: " + value + " (not an integer)");
+            value |= 0;
+            if (typeof offset !== 'number' || offset % 1 !== 0)
+                throw TypeError("Illegal offset: " + offset + " (not an integer)");
+            offset >>>= 0;
+            if (offset < 0 || offset + 0 > this.buffer.length)
+                throw RangeError("Illegal offset: 0 <= " + offset + " (+" + 0 + ") <= " + this.buffer.length);
         }
-        this.buffer[offset++] = b;
-        value >>>= 7;
+        var size = ByteBuffer.calculateVarint32(value),
+            rotate = true,
+            b;
+        offset += size;
+        var capacity10 = this.buffer.length;
+        if (offset > capacity10)
+            this.resize((capacity10 *= 2) > offset ? capacity10 : offset);
+        offset -= size;
+
+        value = (value << 1) ^ (value >> 31);
+
+        value >>>= 0;
+        while (value) {
+            b = (value & 0x7f);
+            if (value >= 0x80)
+                b |= 0x80;
+            if (rotate) {
+                rotate = false;
+                var lsb = b & 0x1;
+                var msb = (b & 0x80) >> 7;
+                b = b >> 1; // rotate to the right
+                b = b & ~(0xC0); // clear 7th and 6th bit
+                b = b | (msb << 7) | (lsb << 6); // insert msb and lsb back in
+            }
+            this.buffer[offset++] = b;
+            value >>>= 7;
+        }
+        if (relative) {
+            this.offset = offset;
+            return this;
+        }
+        return size;
     }
-    if (relative) {
-        this.offset = offset;
-        return this;
-    }
-    return size;
 };
 
 /**
@@ -125,7 +128,7 @@ ByteBuffer.prototype.writeRrsInt32 = function(value, offset) {
  * @expose
  * @see ByteBuffer#readVarint32
  */
-ByteBuffer.prototype.readIString = function(offset) {
+ByteBuffer.prototype.readIString = function (offset) {
     var relative = typeof offset === 'undefined';
     if (relative) offset = this.offset;
     if (!this.noAssert) {
@@ -165,7 +168,7 @@ ByteBuffer.prototype.readIString = function(offset) {
  * @expose
  * @see ByteBuffer#writeVarint32
  */
-ByteBuffer.prototype.writeIString = function(str, offset) {
+ByteBuffer.prototype.writeIString = function (str, offset) {
     var relative = typeof offset === 'undefined';
     if (relative) offset = this.offset;
     if (!this.noAssert) {
@@ -185,7 +188,7 @@ ByteBuffer.prototype.writeIString = function(str, offset) {
     if (offset > capacity13)
         this.resize((capacity13 *= 2) > offset ? capacity13 : offset);
     offset -= 4 + k;
-    if(k === 0) { // supercell wants FF ^_^
+    if (k === 0) { // supercell wants FF ^_^
         this.buffer[offset + 3] = 0xFF;
         this.buffer[offset + 2] = 0xFF;
         this.buffer[offset + 1] = 0xFF;

@@ -1,6 +1,6 @@
 const tag2id = require('../../../utils/tag2id')
 
-module.exports.code = 19860
+module.exports.code = 17352
 module.exports.payload = tag => {
   let id = tag2id.tag2id(tag)
   let buf = Buffer.alloc(8)

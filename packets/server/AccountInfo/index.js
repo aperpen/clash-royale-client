@@ -1,7 +1,7 @@
 const ByteBuffer = require('../../../utils/bytebuffer-sc')
 const log = require('../../../utils/console').log
 
-module.exports.code = 28502
+module.exports.code = 28337
 
 module.exports.decode = payload => {
   let buffer = ByteBuffer.fromBinary(payload)

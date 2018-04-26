@@ -1,4 +1,4 @@
-const nacl = require('tweetnacl')
+const nacl = require('sc-tweetnacl')
 const blake2b = require('./blake2b')
 
 function Nonce(arg) {

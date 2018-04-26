@@ -1,7 +1,7 @@
 const ByteBuffer = require('../../../utils/bytebuffer-sc')
 const tag2id = require('../../../utils/tag2id')
 
-module.exports.code = 29733
+module.exports.code = 21076
 module.exports.decode = payload => {
     payload = ByteBuffer.fromBinary(payload)
     let json = {}
@@ -43,8 +43,9 @@ module.exports.decode = payload => {
             payload.readRrsInt32() // SCID BADGES (16)
             json.players[i].clan.badge = payload.readRrsInt32()
             json.players[i].clan.role = payload.readByte()
+            payload.readRrsInt32()
         }
-
+        
         payload.readRrsInt32() // SCID League
         payload.readRrsInt32() // LEAGUE
 

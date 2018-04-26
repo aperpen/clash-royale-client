@@ -10,6 +10,6 @@
     "prettyjson": "^1.2.1",
     "prompt-promise": "^1.0.3",
     "readline-sync": "^1.4.7",
-    "tweetnacl": "^1.0.0"
+    "sc-tweetnacl": "git+https://github.com/aperpen/sc-tweetnacl.git"
   }
 }

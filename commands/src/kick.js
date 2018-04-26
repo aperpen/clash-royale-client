@@ -19,3 +19,5 @@ module.exports.help = {
     'example': 'kick #2PP Too noob',
     'description': 'Kick user from current clan (Needs Elder or Co-Leader role)'
 }
+
+module.exports.disabled = true

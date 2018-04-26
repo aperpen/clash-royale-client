@@ -1,5 +1,5 @@
 
-const nacl = require('tweetnacl')
+const nacl = require('sc-tweetnacl')
 const Nonce = require('./nonce')
 
 function Crypto() { }
@@ -16,7 +16,7 @@ Crypto.prototype.processPacket = (message) => {
             break;
         case 20103:
             return message.payload
-        case 22280:
+        case 22194:
             let nonce = this.nonce = new Nonce({
                 publicKey: this.keys.publicKey,
                 serverKey: this.serverKey,

@@ -25,7 +25,7 @@ const events = {
     PROMOTED: 5
 }
 
-module.exports.code = 21075
+module.exports.code = 21747
 
 module.exports.decode = payload => {
     let buffer = ByteBuffer.fromBinary(payload)
@@ -47,7 +47,8 @@ module.exports.decode = payload => {
     entry.senderRole = buffer.readRrsInt32()
     entry.age = buffer.readRrsInt32()
     buffer.readByte()
-
+    buffer.readByte()
+    buffer.readByte()
     switch (entry.id) {
         case ids.BATTLE:
             entry.data = battle.decode(buffer)
