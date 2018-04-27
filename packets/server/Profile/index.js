@@ -195,8 +195,9 @@ module.exports = {
     } else {
       json.clan = false
     }
+    json.warTrophies = buf.readRrsInt32()
     json.battles = buf.readRrsInt32()
-    json.tourneBattles = buf.readRrsInt32()
+    json.tourneyBattles = buf.readRrsInt32()
 
     buf.readRrsInt32()
 

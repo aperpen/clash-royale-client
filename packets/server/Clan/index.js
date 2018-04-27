@@ -32,9 +32,10 @@ module.exports = {
 
     payload.readRrsInt32()
     json.region = payload.readRrsInt32()
+
     payload.readRrsInt32()
-    payload.readRrsInt32()
-    
+
+    json.warTrophies = payload.readRrsInt32()
     json.description = payload.readIString()
     json.members = []
 
