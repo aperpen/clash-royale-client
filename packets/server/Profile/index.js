@@ -6,13 +6,17 @@ module.exports = {
   decode: (payload) => {
     let buf = ByteBuffer.fromBinary(payload)
 
-    let json = {}
+    let json = {
+      seasons: [],
+      deckCards: [],
+      tourneys: {},
+      challenges: {}
+    }
 
     buf.readRrsInt32()
     buf.readRrsInt32()
     buf.readRrsInt32()
 
-    json.deckCards = []
     for (let i = 0; i <= 7; i++) {
       let card = {}
       card.id = buf.readRrsInt32()
@@ -29,23 +33,22 @@ module.exports = {
     json.tag = tag2id.id2tag(json.id.high, json.id.low)
 
     let unk = buf.readRrsInt32()
-    if(unk){
-        buf.readRrsInt32()
-        buf.readRrsInt32()
+    if (unk) {
+      buf.readRrsInt32()
+      buf.readRrsInt32()
     }
 
     let seasonResultsCount = buf.readRrsInt32()
-    json.seasons = []
     for (let i = 0; i < seasonResultsCount; i++) {
-        json.seasons[i] = {}
-        buf.readRrsInt32() // ID ?
-        json.seasons[i].record = buf.readRrsInt32()
-        json.seasons[i].result = buf.readRrsInt32()
-        buf.readRrsInt32() // RANK
-        buf.readRrsInt32()
+      json.seasons[i] = {}
+      buf.readRrsInt32() // ID ?
+      json.seasons[i].record = buf.readRrsInt32()
+      json.seasons[i].result = buf.readRrsInt32()
+      buf.readRrsInt32() // RANK
+      buf.readRrsInt32()
     }
     buf.readByte()
-    
+
     // 3x RRSLONG id
     for (let i = 0; i <= 2; i++) {
       buf.readRrsInt32()
@@ -53,7 +56,7 @@ module.exports = {
     }
 
     json.name = buf.readIString()
-    buf.readByte() // NAME CHANGES
+    json.nameChanged = Boolean(buf.readByte())
 
     json.arena = buf.readByte()
     json.trophies = buf.readRrsInt32()
@@ -105,18 +108,6 @@ module.exports = {
         case 15:
           json.legendaryChest = value ? value - json.wonChests : -1
           break
-        case 16:
-          json.shopRestarts = value
-          break
-        case 17:
-          json.shopLegendaryChest = (value - json.shopRestarts > 0) ? value - json.shopRestarts : -1
-          break
-        case 18:
-          json.shopEpicChest = (value - json.shopRestarts > 0) ? value - json.shopRestarts : -1
-          break
-        case 19:
-          json.shopArenaPack = value
-          break
         case 22:
           json.epicChest = value ? value - json.wonChests : -1
           break
@@ -128,8 +119,13 @@ module.exports = {
     componentLength = buf.readRrsInt32()
     for (let i = 0; i < componentLength; i++) {
       buf.readByte()
-      buf.readByte()
-      buf.readRrsInt32()
+      let statId = buf.readByte()
+      let value = buf.readRrsInt32()
+      switch (statId) {
+        case 11:
+          json.tourneys.cards = value
+          break
+      }
     }
     componentLength = buf.readRrsInt32()
     for (let i = 0; i < componentLength; i++) {
@@ -159,8 +155,11 @@ module.exports = {
         case 10:
           json.donations = value
           break
+        case 20:
+          json.challenges.maxWins = value
+          break
         case 21:
-          json.challengeCards = value
+          json.challenges.cards = value
           break
       }
     }
@@ -197,12 +196,12 @@ module.exports = {
     }
     json.warTrophies = buf.readRrsInt32()
     json.battles = buf.readRrsInt32()
-    json.tourneyBattles = buf.readRrsInt32()
+    json.tourneys.battles = buf.readRrsInt32()
 
     buf.readRrsInt32()
 
     json.wins = buf.readRrsInt32()
-    json.loses = buf.readRrsInt32()
+    json.losses = buf.readRrsInt32()
     return json
   }
 }

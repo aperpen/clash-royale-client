@@ -42,13 +42,12 @@ module.exports.decode = payload => {
             json.players[i].clan.name = payload.readIString()
             payload.readRrsInt32() // SCID BADGES (16)
             json.players[i].clan.badge = payload.readRrsInt32()
+            json.players[i].clan.warTrophies = payload.readRrsInt32()
             json.players[i].clan.role = payload.readByte()
-            payload.readRrsInt32()
         }
-        
+
         payload.readRrsInt32() // SCID League
         payload.readRrsInt32() // LEAGUE
-
     }
 
     return json
