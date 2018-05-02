@@ -10,7 +10,8 @@ module.exports = {
       seasons: [],
       deckCards: [],
       tourneys: {},
-      challenges: {}
+      challenges: {},
+      wars: {}
     }
 
     buf.readRrsInt32()
@@ -99,6 +100,9 @@ module.exports = {
         case 2:
           json.wonChests = value
           break
+        case 3:
+          json.chestsInSlots = value
+          break
         case 12:
           json.superMagicalChest = value ? value - json.wonChests : -1
           break
@@ -160,6 +164,12 @@ module.exports = {
           break
         case 21:
           json.challenges.cards = value
+          break
+        case 39:
+          json.wars.collectedCards = value
+          break
+        case 40:
+          json.wars.warDayWins = value
           break
       }
     }
