@@ -1,7 +1,7 @@
 const ByteBuffer = require('../../../utils/bytebuffer-sc')
 const tag2id = require('../../../utils/tag2id')
 
-module.exports.code = 12159
+module.exports.code = 14361
 module.exports.payload = args => {
     let buf = ByteBuffer.allocate(500)
     buf.writeRrsInt32(config.ticks)
@@ -16,7 +16,7 @@ module.exports.payload = args => {
 const commands = {}
 
 commands.kick = (buf, params) => {
-    buf.writeRrsInt32(537) // COMMAND ID
+    buf.writeRrsInt32(589) // COMMAND ID
 
     let tick = config.ticks
     buf.writeRrsInt32(tick - 2)
