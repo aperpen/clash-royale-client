@@ -29,11 +29,9 @@ Crypto.prototype.processPacket = (message) => {
                 bytes: decrypted.slice(0, 24)
             })
             return decrypted.slice(56)
-            break;
         default:
             this.rnonce.increment(2)
             return nacl.box.open.after(message.payload, this.rnonce.payload, this.sharedKey)
-            break;
     }
 }
 
@@ -48,7 +46,7 @@ Crypto.prototype.encrypt = (code, payload) => {
         })
         this.sharedKey = nacl.box.before(this.serverKey, this.keys.secretKey)
         let crypted = nacl.box.after(Buffer.concat([this.sessionKey, this.snonce.payload, payload]), this.nonce.payload, this.sharedKey)
-        
+
         return Buffer.concat([this.keys.publicKey, Buffer.from(crypted)])
     }
 
