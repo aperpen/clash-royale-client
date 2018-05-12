@@ -2,7 +2,8 @@
   "name": "clash-royale-client",
   "version": "1.0.0",
   "scripts": {
-    "client": "node index"
+    "client": "node index",
+    "rest": "node index-rest"
   },
   "dependencies": {
     "blessed": "^0.1.81",

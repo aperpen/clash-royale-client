@@ -54,7 +54,7 @@ module.exports.init = () => {
     input.focus()
 }
 
-module.exports.log = text => output.log(text)
+module.exports.log = text => output ? output.log(text) : console.log(text)
 
 module.exports.dump = text => {
     screen.destroy()

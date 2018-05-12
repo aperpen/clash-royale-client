@@ -24,7 +24,7 @@ Processor.prototype.parse = (code, buffer) => {
         if (typeof packets[code].decode == 'function') {
             try {
                 let data = packets[code].decode(buffer)
-                cnsl.log(prettyjson.render(data))
+                cnsl.log("------------\n" + prettyjson.render(data) + "\n------------")
                 if (typeof packets[code].callback == 'function') packets[code].callback(data)
             } catch (e) {
                 cnsl.log('✖️ Error decoding ' + code + ' packet')
