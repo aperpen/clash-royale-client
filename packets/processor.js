@@ -19,7 +19,7 @@ Processor.prototype.send = function (code, payload) {
 
 Processor.prototype.parse = (code, buffer) => {
     cnsl.log('📥 ' + (packets[code] && packets[code].name ? packets[code].name : code))
-    // if (packets[code] && packets[code].name === 'ClanChatEntry') cnsl.dump(Buffer.from(buffer).toString('hex'))
+    // if (packets[code] && packets[code].name === 'AccountInfo') cnsl.dump(Buffer.from(buffer).toString('hex'))
     if (packets[code] && !packets[code].disabled) {
         if (typeof packets[code].decode == 'function') {
             try {

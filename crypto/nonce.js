@@ -16,7 +16,7 @@ function Nonce(arg) {
     } else if (arg !== undefined && arg.bytes) {
         this.payload = Buffer.from(arg.bytes, 'hex')
     } else {
-        this.payload = new Buffer(nacl.randomBytes(nacl.box.nonceLength))
+        this.payload = Buffer.from(nacl.randomBytes(nacl.box.nonceLength))
     }
 }
 
