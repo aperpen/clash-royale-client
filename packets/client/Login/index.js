@@ -1,11 +1,12 @@
 const ByteBuffer = require('../../../utils/bytebuffer-sc')
+const zlib = require('zlib')
 
 module.exports.code = 10101
 module.exports.payload = () => {
-    let buf = ByteBuffer.allocate(280)
-    buf.writeInt32(config.account.id.high)
-    buf.writeInt32(config.account.id.low)
-    buf.writeIString(config.account.pass)
+    let buf = ByteBuffer.allocate(1000)
+    buf.writeInt32(config.account.scid ? 0 : config.account.id.high)
+    buf.writeInt32(config.account.scid ? 0 : config.account.id.low)
+    buf.writeIString(config.account.scid ? '' : config.account.pass)
     buf.writeRrsInt32(3)
     buf.writeRrsInt32(0)
     buf.writeRrsInt32(1051)
@@ -22,7 +23,7 @@ module.exports.payload = () => {
     buf.writeIString('en-GB')
     buf.writeByte(1)
     buf.writeByte(0)
-    buf.writeIString('0d2c46b3-361b-4a76-aee0-f22032f1ce01')
+    buf.writeInt32(0)
     buf.writeByte(1)
     buf.writeInt32(0)
     buf.writeByte(2)
@@ -30,7 +31,18 @@ module.exports.payload = () => {
     buf.writeInt32(0)
     buf.writeInt32(0)
     buf.writeInt32(0)
-    buf.writeByte(0)
+
+    if(!config.account.scid) buf.writeByte(0)
+    else {
+      buf.writeInt32(0)
+      buf.writeByte(1)
+      buf.writeByte(8)
+      let token = Buffer.from(config.account.scidtoken, 'utf8')
+      buf.LE()
+      buf.writeInt32(token.length)
+      buf.BE()
+      buf.append(zlib.deflateSync(token))
+    }
 
     return buf.buffer.slice(0, buf.offset)
 }

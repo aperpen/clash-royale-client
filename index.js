@@ -37,7 +37,7 @@ fs.readdir('./packets/client', (err, files) => {
 
 screen.banner()
 selectAccount().then(acc => {
-    screen.init()
+    if(config.commandsConsole) screen.init()
     acc.id = tag2id.tag2id(acc.tag)
     config.account = acc
 

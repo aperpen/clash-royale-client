@@ -1,4 +1,5 @@
 const Blessed = require('blessed')
+const config = require('../config')
 const runCmd = require('../commands/index').run
 
 let screen = null
@@ -54,7 +55,7 @@ module.exports.init = () => {
     input.focus()
 }
 
-module.exports.log = text => output.log(text)
+module.exports.log = text => (config.commandsConsole ? output : console).log(text)
 
 module.exports.dump = text => {
     screen.destroy()
