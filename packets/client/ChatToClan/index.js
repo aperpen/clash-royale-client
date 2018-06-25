@@ -1,6 +1,6 @@
 const ByteBuffer = require('../../../utils/bytebuffer-sc')
 
-module.exports.code = 10644
+module.exports.code = 14364
 module.exports.payload = message => {
     let buf = ByteBuffer.allocate(1000)
 

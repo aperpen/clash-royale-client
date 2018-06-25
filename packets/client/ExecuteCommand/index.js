@@ -1,7 +1,7 @@
 const ByteBuffer = require('../../../utils/bytebuffer-sc')
 const tag2id = require('../../../utils/tag2id')
 
-module.exports.code = 14361
+module.exports.code = 17508
 module.exports.payload = args => {
     let buf = ByteBuffer.allocate(500)
     buf.writeRrsInt32(config.ticks)

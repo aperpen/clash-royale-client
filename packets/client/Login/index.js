@@ -9,7 +9,7 @@ module.exports.payload = () => {
     buf.writeIString(config.account.scid ? '' : config.account.pass)
     buf.writeRrsInt32(3)
     buf.writeRrsInt32(0)
-    buf.writeRrsInt32(1051)
+    buf.writeRrsInt32(1185)
     buf.writeIString(config.resourceSha)
     buf.writeInt32(0)
     buf.writeIString('4699c1d58f3532c1')
@@ -34,9 +34,10 @@ module.exports.payload = () => {
 
     if(!config.account.scid) buf.writeByte(0)
     else {
-      buf.writeInt32(0)
+      buf.writeByte(1)
       buf.writeByte(1)
       buf.writeByte(8)
+      buf.writeInt32(0);
       let token = Buffer.from(config.account.scidtoken, 'utf8')
       buf.LE()
       buf.writeInt32(token.length)

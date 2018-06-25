@@ -2,7 +2,7 @@ const tag2id = require('../../../utils/tag2id')
 const ByteBuffer = require('../../../utils/bytebuffer-sc')
 
 module.exports = {
-  code: 20582,
+  code: 25719,
   decode: (payload) => {
     payload = ByteBuffer.fromBinary(payload)
 
