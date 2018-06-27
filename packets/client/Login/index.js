@@ -9,7 +9,7 @@ module.exports.payload = () => {
     buf.writeIString(config.account.scid ? '' : config.account.pass)
     buf.writeRrsInt32(3)
     buf.writeRrsInt32(0)
-    buf.writeRrsInt32(1185)
+    buf.writeRrsInt32(1186)
     buf.writeIString(config.resourceSha)
     buf.writeInt32(0)
     buf.writeIString('4699c1d58f3532c1')
