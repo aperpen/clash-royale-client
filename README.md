@@ -42,7 +42,7 @@ node index --replay
 The client has built-in support for save multiple sessions.
 
 ### Commands
-- Press Ctrl + C to type a command
+- Press Alt + C to type a command
 - Type 'help' to get started
 
 ## Installation
