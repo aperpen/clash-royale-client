@@ -22,11 +22,11 @@ module.exports.decode = (payload) => {
   return json
 }
 
-module.exports.callback = async data => {
+module.exports.callback = (session, data) => {
   if (data.code === 7) {
-    let config = require('../../../config.js')
+    let config = require('../../../../config.js')
     config.resourceSha = data.sha
-    await fs.writeFileSync('./config.js', 'module.exports = ' + JSON.stringify(config, null, 3))
+    fs.writeFileSync('./config.js', 'module.exports = ' + JSON.stringify(config, null, 3))
     console.log('Resource SHA updated after maintenance. Restart the client to log in.')
   } else if(data.code === 10) {
     console.log('Servers are in maintenance. ETA: ', data.seconds)
