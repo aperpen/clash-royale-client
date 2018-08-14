@@ -1,65 +1,63 @@
-const Blessed = require('blessed')
-const config = require('../config')
-const runCmd = require('../commands/index').run
+const inquirer = require('inquirer')
+const readline = require('readline')
+const commands = require('../logic/commands')
+const states = {
+  FREE: 0,
+  PROMPTING: 1,
+  REPLAYING: 2
+}
+const _log = console.log
 
-let screen = null
-let output = null
-module.exports.init = () => {
-    screen = Blessed.screen({
-        fullUnicode: true
-    })
-    output = Blessed.log({
-        top: 0,
-        left: 0,
-        height: '100%-3',
-        width: '100%',
-        keys: true,
-        mouse: true,
-        scrollable: true,
-        scrollbar: {
-            ch: ' ',
-            bg: 'red'
-        },
-        border: {
-            type: 'line'
-        },
-        label: ' Log '
-    })
-    let input = Blessed.textbox({
-        bottom: 0,
-        left: 0,
-        height: 3,
-        width: '100%',
-        keys: true,
-        mouse: true,
-        inputOnFocus: true,
-        style: {
-            fg: 'white',
-        },
-        border: {
-            type: 'line'
-        },
-        label: ' Input '
-    })
+let rl = null
+let __state = states.FREE
+let __logQueue = []
 
-    screen.key(['escape', 'C-c'], () => process.exit(0))
-    screen.append(output)
-    screen.append(input)
-
-    input.on('submit', text => {
-        runCmd(text)
-        input.clearValue()
-        input.focus()
+module.exports.prompt = questions => {
+  if (rl) rl.close()
+  if (__state === states.PROMPTING) return Promise.resolve(false)
+  __state = states.PROMPTING
+  return inquirer
+    .prompt(questions)
+    .then(answers => {
+      setState(states.FREE)
+      // Create a new rl, after inquirer closed it
+      // We need this to keep listening to keypress event
+      rl = readline.createInterface({
+        terminal: true,
+        input: process.stdin,
+        output: process.stdout
+      })
+      rl.resume()
+      return answers
     })
-
-    input.focus()
 }
 
-module.exports.log = text => (config.commandsConsole ? output : console).log(text)
+process.stdin.setRawMode(true)
+process.stdin.on('keypress', (str, key) => {
+  if (__state === states.FREE && key.sequence === '\u001bc') {
+    module.exports.prompt({
+      type: 'input',
+      name: 'command',
+      msg: 'Input command'
+    }).then(answer => commands.execute(answer.command))
+  } else if(key.sequence === '\u0003') process.exit()
+})
+process.on('SIGINT', () => process.exit()) // Raw mode
 
-module.exports.dump = text => {
-    screen.destroy()
-    console.log(text)
+console.log = function() {
+  if (__state === states.FREE || __state === states.REPLAYING) _log.apply(console, arguments)
+  else __logQueue.push(arguments)
 }
 
-module.exports.banner = () => console.log(Buffer.from('1b5b33316d2020205f5f5f5f5f5f5f5f5f5f20202020205f5f5f5f5f5f5f5f5f2020202020202020202020205f5f201b5b33396d0d0a1b5b33316d20202f205f5f5f5f2f205f5f205c2020202f205f5f5f5f2f20285f295f5f20205f5f5f5f20202f202f5f1b5b33396d0d0a1b5b33316d202f202f2020202f202f5f2f202f20202f202f2020202f202f202f205f205c2f205f5f205c2f205f5f2f1b5b33396d0d0a1b5b33316d2f202f5f5f5f2f205f2c205f2f20202f202f5f5f5f2f202f202f20205f5f2f202f202f202f202f5f20201b5b33396d0d0a1b5b33316d5c5f5f5f5f2f5f2f207c5f7c2020205c5f5f5f5f2f5f2f5f2f5c5f5f5f2f5f2f202f5f2f5c5f5f2f20201b5b33396d0d0a1b5b33316d2020202020202020202020202020202020202020202020202020202020202020202020202020202020201b5b33396d', 'hex').toString('utf8'))
+const setState = state => {
+  __state = state
+  if (state === states.FREE) {
+    for (let entry of __logQueue) {
+      _log.apply(console, entry)
+    }
+    __logQueue = []
+  }
+}
+
+module.exports.states = states
+module.exports.setState = setState
