@@ -25,6 +25,8 @@ This is a basic client. Now is your turn. Modify the client and add functions to
 Or you can use adb:
 `adb pull /data/data/com.supercell.clashroyale/shared_prefs/storage_new.xml D:\some_path`
 ## Usage
+### Installing the client
+You can just fork this repository.
 ### Running the client  
 ```
 node index
