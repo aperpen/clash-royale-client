@@ -1,4 +1,4 @@
-module.exports.code = 26769
+module.exports.code = 25483
 
 module.exports.callback = () => {
   console.log('Another device is connecting to this account. Exiting...')

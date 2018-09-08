@@ -1,6 +1,6 @@
 const ByteBuffer = require('../../../../utils/bytebuffer-sc')
 
-module.exports.code = 24660
+module.exports.code = 22006
 
 module.exports.decode = payload => {
   let buffer = ByteBuffer.fromBinary(payload)
@@ -20,7 +20,7 @@ module.exports.decode = payload => {
 }
 
 module.exports.callback = (session, data) => {
-  if(data.unlockedCards)
+  if(data && data.unlockedCards)
     session.checksum = ((data.unlockedCards - 8) << 16) | data.checksumSeed
   else console.log('[WARN] Failed to calculate checksum, some commands won\'t work')
 }
