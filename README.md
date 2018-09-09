@@ -20,9 +20,13 @@ This is a basic client. Now is your turn. Modify the client and add functions to
 
 1. Download [decrypt.py](https://gist.github.com/aperpen/79600a80bf64a9df40a171324c951212) tool
 2. Pull storage_new.xml file from your device. Usually it's located in `/data/data/com.supercell.clashroyale/shared_prefs`.
-3. Run `python decrypt.py storage_new.xml`. Look for `Pass_PROD` key, the value is your token.
+3. Run `python3 decrypt.py storage_new.xml`. Look for `Pass_PROD` key, the value is your token.
 
+Or you can use adb:
+`adb pull /data/data/com.supercell.clashroyale/shared_prefs/storage_new.xml D:\some_path`
 ## Usage
+### Installing the client
+You can just fork this repository.
 ### Running the client  
 ```
 node index
