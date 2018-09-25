@@ -36,18 +36,10 @@ module.exports.payload = session => {
     buf.writeInt32(0)
     buf.writeInt32(0)
     buf.writeInt32(0)
-    let token
-    let compressedToken
-    if(session.account.scid) {
-      token = Buffer.from(session.account.scidtoken, 'utf8')
-      compressedToken = zlib.deflateSync(token)
-      buf.writeByte(1)
-      buf.writeByte(compressedToken.length)
-    } else {
-      buf.writeByte(0)
-      buf.writeByte(12)
-      token = Buffer.from('')
-    }
+    let token = session.account.scid ? Buffer.from(session.account.scidtoken, 'utf8') : Buffer.from('')
+    let compressedToken = zlib.deflateSync(token)
+    buf.writeByte(session.account.scid ? 1 : 0)
+    buf.writeByte(compressedToken.length)
     buf.LE()
     buf.writeInt32(token.length)
     buf.BE()
