@@ -8,9 +8,9 @@ module.exports.version = 4
 
 module.exports.payload = session => {
     let buf = new ByteBuffer
-    buf.writeInt32(session.account.scid ? 0 : session.account.id.high)
-    buf.writeInt32(session.account.scid ? 0 : session.account.id.low)
-    buf.writeIString(session.account.scid ? '' : session.account.pass)
+    buf.writeInt32(session.account.scidtoken ? 0 : session.account.id.high)
+    buf.writeInt32(session.account.scidtoken ? 0 : session.account.id.low)
+    buf.writeIString(session.account.scidtoken ? '' : session.account.pass)
     buf.writeRrsInt32(3)
     buf.writeRrsInt32(0)
     buf.writeRrsInt32(1282)
@@ -36,10 +36,10 @@ module.exports.payload = session => {
     buf.writeInt32(0)
     buf.writeInt32(0)
     buf.writeInt32(0)
-    let token = session.account.scid ? Buffer.from(session.account.scidtoken, 'utf8') : Buffer.from('')
+    let token = session.account.scidtoken ? Buffer.from(session.account.scidtoken, 'utf8') : ''
     let compressedToken = zlib.deflateSync(token)
-    buf.writeByte(session.account.scid ? 1 : 0)
-    buf.writeByte(compressedToken.length)
+    buf.writeByte(session.account.scidtoken ? 1 : 0)
+    buf.writeByte(compressedToken.length + 4)
     buf.LE()
     buf.writeInt32(token.length)
     buf.BE()

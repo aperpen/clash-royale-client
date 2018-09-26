@@ -9,6 +9,6 @@ module.exports = {
     {
         name: 'abc',
         tag: '2PJ',
-        pass: ''
+        scidtoken: ''
     }]
 }
