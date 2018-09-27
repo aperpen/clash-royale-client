@@ -25,7 +25,7 @@ const events = {
     PROMOTED: 5
 }
 
-module.exports.code = 24435
+module.exports.code = 22561
 
 module.exports.decode = payload => {
     let buffer = ByteBuffer.fromBinary(payload)
