@@ -2,6 +2,10 @@ module.exports = {
     resourceSha: "0055a6959755b4ad88c4d185e850b284d7c555bc",
     serverKey: "a93fa71840a9c02acbb647c91ec040053fdbf9a9acb0599d0ce47fba87215e0a",
     savePath: "./save",
+    "version": {
+        "major": 3,
+        "build": 1282,
+    },
     credentials: [{
         tag: '2PP',
         pass: ''
@@ -9,6 +13,7 @@ module.exports = {
     {
         name: 'abc',
         tag: '2PJ',
+        pass: '',
         scidtoken: ''
     }]
 }
