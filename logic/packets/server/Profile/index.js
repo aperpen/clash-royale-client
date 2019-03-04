@@ -2,7 +2,7 @@ const tag2id = require('../../../../utils/tag2id')
 const ByteBuffer = require('../../../../utils/bytebuffer-sc')
 
 module.exports = {
-  code: 28289,
+  code: 25789,
   decode: (payload) => {
     let buf = ByteBuffer.fromBinary(payload)
 
@@ -11,17 +11,19 @@ module.exports = {
       deckCards: [],
       tourneys: {},
       challenges: {},
-      wars: {}
+      wars: {},
+      badges: []
     }
 
     buf.readRrsInt32()
     buf.readRrsInt32()
     buf.readRrsInt32()
-
-    for (let i = 0; i <= 7; i++) {
+    for (let i = 0; i < 8; i++) {
       let card = {}
+
       card.id = buf.readRrsInt32()
       card.level = buf.readRrsInt32()
+      card.stars = buf.readRrsInt32()
       buf.readRrsInt32()
       card.count = buf.readRrsInt32()
       buf.readRrsInt32()
@@ -104,7 +106,7 @@ module.exports = {
           json.chestsInSlots = value
           break
         case 12:
-          json.superMagicalChest = value ? value - json.wonChests : -1
+          json.megaLightningChest = value ? value - json.wonChests : -1
           break
         case 14:
           json.dailyRewards = value
@@ -180,18 +182,30 @@ module.exports = {
       buf.readRrsInt32()
       buf.readRrsInt32()
     }
+
     if ((buf.readByte())) {
       buf.readRrsInt32()
       buf.readByte()
       buf.readByte()
     }
+    
     buf.readByte()
+
+    // Medals
+    componentLength = buf.readRrsInt32()
+    for (let i = 0; i < componentLength; i++) {
+      let badge = {}
+      buf.readRrsInt32()
+      badge.id = buf.readRrsInt32()
+      badge.value = buf.readRrsInt32()
+
+      json.badges.push(badge)
+    }
 
     json.gems = buf.readRrsInt32()
     buf.readRrsInt32() // GEMS AGAIN
     json.exp = buf.readRrsInt32()
     json.level = buf.readRrsInt32()
-
     buf.readRrsInt32()
 
     if (buf.readByte() === 9) {
@@ -199,12 +213,14 @@ module.exports = {
         tag: tag2id.id2tag(buf.readRrsInt32(), buf.readRrsInt32()),
         name: buf.readIString(),
         badge: buf.readRrsInt32(),
-        role: buf.readByte()
+        role: buf.readByte(),
+        warTrophies: buf.readRrsInt32()
       }
+      buf.readByte()
     } else {
       json.clan = false
     }
-    json.warTrophies = buf.readRrsInt32()
+    
     json.battles = buf.readRrsInt32()
     json.tourneys.battles = buf.readRrsInt32()
 
@@ -212,6 +228,7 @@ module.exports = {
 
     json.wins = buf.readRrsInt32()
     json.losses = buf.readRrsInt32()
+
     return json
   }
 }

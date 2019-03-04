@@ -1,6 +1,6 @@
 const tag2id = require('../../../../utils/tag2id')
 
-module.exports.code = 11610
+module.exports.code = 18889
 
 module.exports.payload = (session, params) => {
     let id = tag2id.tag2id(params.tag)

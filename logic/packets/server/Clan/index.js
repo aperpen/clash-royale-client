@@ -2,12 +2,12 @@ const tag2id = require('../../../../utils/tag2id')
 const ByteBuffer = require('../../../../utils/bytebuffer-sc')
 
 module.exports = {
-  code: 22357,
+  code: 22000,
   decode: (payload) => {
     payload = ByteBuffer.fromBinary(payload)
 
     let json = {}
-
+    try {
     json.id = payload.readInt64()
     json.tag = tag2id.id2tag(json.id.high, json.id.low)
     json.name = payload.readIString()
@@ -35,6 +35,11 @@ module.exports = {
     payload.readRrsInt32()
 
     json.warTrophies = payload.readRrsInt32()
+
+    payload.readRrsInt32()
+    payload.readByte()
+    payload.readByte()
+    
     json.description = payload.readIString()
     json.members = []
 
@@ -74,5 +79,10 @@ module.exports = {
     payload.readRrsInt32()
 
     return json
+   } catch(e) {
+     console.log(e)
+     console.log(payload.buffer.toString('hex'))
+     return json
+   }
   }
 }

@@ -1,7 +1,7 @@
 const ByteBuffer = require('../../../../utils/bytebuffer-sc')
 const tag2id = require('../../../../utils/tag2id')
 
-module.exports.code = 28020
+module.exports.code = 28047
 module.exports.decode = payload => {
     payload = ByteBuffer.fromBinary(payload)
     let json = {}
