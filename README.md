@@ -13,14 +13,19 @@ NodeJS client to connect to Clash Royale servers.
 
 This is a basic client. Now is your turn. Modify the client and add functions to fit it to your requirements.
 
-## Getting a token (Android)
-#### Requirements
-* python3.6
+## Installation
+- Run `npm install`
+- Rename config.example to config.js and modify your credentials
+
+### Getting a token (Android)
 > You will need a rooted device
 
-1. Download [decrypt.py](https://gist.github.com/aperpen/79600a80bf64a9df40a171324c951212) tool
+1. Download [decrypt.js](https://gist.github.com/aperpen/18378731d8ef081c2f940d862ff40754) tool
 2. Pull storage_new.xml file from your device. Usually it's located in `/data/data/com.supercell.clashroyale/shared_prefs`.
-3. Run `python decrypt.py storage_new.xml`. Look for `Pass_PROD` key, the value is your token.
+3. Run `node decrypt.js`. Look for your account in `SCID_PROD_ACCOUNTS` key, the value contains your token.
+4. Put your token in `scidtoken` key in config.js
+
+* **KNOWN ISSUE** Client only works with accounts using scid token
 
 ## Usage
 ### Running the client  
@@ -45,9 +50,6 @@ The client has built-in support for save multiple sessions.
 - Press Alt + C to type a command
 - Type 'help' to get started
 
-## Installation
-- Run `npm install`
-- Rename config.example to config.js and modify your credentials
 
 ## Credits
 - [iGio90](https://github.com/iGio90) for the new key and **all the amazing contributions he does**
