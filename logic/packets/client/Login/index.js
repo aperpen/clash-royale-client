@@ -8,9 +8,9 @@ module.exports.version = 4
 
 module.exports.payload = session => {
     let buf = new ByteBuffer
-    buf.writeInt32(session.account.id.high ? 0 : session.account.id.high)
-    buf.writeInt32(session.account.id.low ? 0 : session.account.id.low)
-    buf.writeIString(session.account.pass ? '' : session.account.pass)
+    buf.writeInt32(session.account.id.high || 0)
+    buf.writeInt32(session.account.id.low || 0)
+    buf.writeIString(session.account.pass || '')
     buf.writeRrsInt32(config.version.major)
     buf.writeRrsInt32(0)
     buf.writeRrsInt32(config.version.build)
@@ -44,5 +44,6 @@ module.exports.payload = session => {
     buf.LE()
     buf.writeInt32(token.length)
     buf.append(compressedToken)
+
     return buf.buffer.slice(0, buf.offset)
 }
