@@ -14,7 +14,11 @@ fs.readdir('./logic/commands', (err, files) => {
 module.exports.match = input => {
   input = input.toLowerCase()
   for (let cmd of commands) {
-    if (cmd.config.name === input || (cmd.config.alias && cmd.config.alias.indexOf(input) > -1)) return cmd
+    if (
+      cmd.config.name.toLowerCase() === input ||
+      (cmd.config.alias && cmd.config.alias.map(a => a.toLowerCase()).indexOf(input) > -1)
+    )
+      return cmd
   }
 
   return false
